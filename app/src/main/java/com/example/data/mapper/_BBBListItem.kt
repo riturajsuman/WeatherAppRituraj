@@ -1,17 +1,42 @@
 package com.example.data.mapper
 
-import com.example.data.model.DemoModelItem
-import com.example.domain.model.DemoListItem
+import com.example.data.model.WeatherForCastResponse
+import com.example.domain.model.*
 
-fun List<DemoModelItem>.toGetBBBdataList(): List<DemoListItem> {
-    val watchList = this
-    val list = mutableListOf<DemoListItem>()
+fun WeatherForCastResponse.toGetBBBDataList(): WeatherForCast {
 
+    val watchList = this.list
+    val mutableList = mutableListOf<WeatherList>()
+    val weatherListDetail = mutableListOf<Weather>()
     watchList.forEach {
-        val depth = it.depth
-        val magnitude = it.magnitude
+        val mainWatchList = it.main
+        val main = Main(
+            mainWatchList.humidity,
+            mainWatchList.temp,
+            mainWatchList.temp_max,
+            mainWatchList.temp_min
+        )
+        val date = it.dt_txt
+        val weatherList = it.weather
 
-        list.add(DemoListItem(depth = depth, magnitude = magnitude))
+
+        weatherList.forEach { it1 ->
+            weatherListDetail.add(Weather(it1.description, it1.main))
+        }
+
+
+        mutableList.add(WeatherList(main = main, dt_txt = date, weatherListDetail))
     }
-    return list
+
+    val city = CityModel(
+        this.city.country,
+        this.city.name,
+        this.city.population,
+        this.city.sunrise,
+        this.city.sunset,
+        this.city.timezone
+    )
+
+    return WeatherForCast(city, this.cnt, this.cod, this.message, mutableList)
+
 }

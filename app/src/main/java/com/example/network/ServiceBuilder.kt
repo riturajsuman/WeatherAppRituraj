@@ -10,7 +10,7 @@ object ServiceBuilder {
     private val client = OkHttpClient.Builder().build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://soda.demo.socrata.com/resource/6yvf-kk3n.json/")
+        .baseUrl("https://api.openweathermap.org/data/2.5/forecast/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

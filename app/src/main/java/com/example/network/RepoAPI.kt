@@ -1,12 +1,11 @@
 package com.example.network
 
-import com.example.data.model.DemoModelItem
-import com.example.data.model.RealDemoResponse
+
+import com.example.data.model.WeatherForCastResponse
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 interface RepoAPI {
-    @GET("?source=pr&region=Virgin%20Islands%20region")
-    fun getCatRandom() : Call<List<DemoModelItem>>
+    @GET("?q=singapore&mode=JSON&appid=00c9b6c30412cff5faeb59efec4d6afc")
+    fun getCatRandom() : Call<WeatherForCastResponse>
 }
